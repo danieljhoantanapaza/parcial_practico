@@ -3,14 +3,14 @@ from flask import Flask, render_template, request, session, redirect, url_for
 app = Flask(__name__)
 app.secret_key = 'portal_academico_2026'
 
-# Usuarios simulados (según PDF)
+# Usuarios simulados
 usuarios = {
     "juan": "1234",
     "maria": "abcd",
     "pedro": "2026"
 }
 
-# Cursos (según PDF)
+# Cursos
 cursos = [
     {"nombre": "Programación Web", "docente": "Luis Pérez", "cupos": 15},
     {"nombre": "Bases de Datos", "docente": "Ana López", "cupos": 8},
@@ -27,6 +27,19 @@ def index():
 @app.route('/login')
 def login():
     return render_template('login.html')
+
+
+# ⚠️ ESTA ES LA RUTA QUE FALTABA
+@app.route('/procesar_login', methods=['POST'])
+def procesar_login():
+    usuario = request.form['usuario']
+    contrasena = request.form['contrasena']
+
+    if usuario in usuarios and usuarios[usuario] == contrasena:
+        session['usuario'] = usuario
+        return redirect(url_for('lista_cursos'))
+    else:
+        return render_template('login.html', error="Usuario o contraseña incorrectos.")
 
 
 @app.route('/cursos')
@@ -49,14 +62,3 @@ def logout():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-@app.route('/procesar_login', methods=['POST'])
-def procesar_login():
-    usuario = request.form['usuario']
-    contrasena = request.form['contrasena']
-
-    if usuario in usuarios and usuarios[usuario] == contrasena:
-        session['usuario'] = usuario
-        return redirect(url_for('lista_cursos'))
-    else:
-        return render_template('login.html', error="Usuario o contraseña incorrectos.")
