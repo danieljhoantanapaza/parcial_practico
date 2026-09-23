@@ -7,17 +7,23 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <nav>
-        <a href="{{ url_for('index') }}">Inicio</a> |
-        <a href="{{ url_for('lista_cursos') }}">Cursos</a> |
-        <a href="{{ url_for('perfil') }}">Perfil</a> |
-        {% if 'usuario' in session %}
-            <a href="{{ url_for('logout') }}">Cerrar sesión ({{ session['usuario'] }})</a>
-        {% else %}
-            <a href="{{ url_for('login') }}">Iniciar sesión</a>
-        {% endif %}
-    </nav>
-    <hr>
-    {% block content %}{% endblock %}
+    <div class="contenedor">
+        <h1>Portal Académico</h1>
+
+        <div class="menu">
+            <a href="{{ url_for('index') }}">Inicio</a>
+            <a href="{{ url_for('lista_cursos') }}">Cursos</a>
+            <a href="{{ url_for('perfil') }}">Perfil</a>
+            {% if 'usuario' in session %}
+                <a href="{{ url_for('logout') }}">Salir ({{ session['usuario'] }})</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Iniciar sesión</a>
+            {% endif %}
+        </div>
+
+        <div class="contenido">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
 </body>
 </html>

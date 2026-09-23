@@ -3,18 +3,17 @@
 {% block title %}Cursos - Portal Académico{% endblock %}
 
 {% block content %}
-    <h1>Lista de Cursos Disponibles</h1>
+    <h2>Cursos Disponibles</h2>
 
     {% if cursos %}
-        <ul>
+        <div class="curso">
         {% for curso in cursos %}
-            <li>
-                <strong>{{ curso.nombre }}</strong> —
-                Docente: {{ curso.docente }} —
-                Cupos: {{ curso.cupos }}
-            </li>
+            <p><strong>{{ curso.nombre }}</strong></p>
+            <p>Docente: {{ curso.docente }}</p>
+            <p>Cupos: {{ curso.cupos }}</p>
+            <hr>
         {% endfor %}
-        </ul>
+        </div>
     {% else %}
         <p>No hay cursos disponibles.</p>
     {% endif %}
